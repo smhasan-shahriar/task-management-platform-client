@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
@@ -19,6 +20,9 @@ const UpdateTask = () => {
   };
   return (
     <div className="min-h-screen max-w-[1440px] mx-auto px-2">
+        <Helmet>
+        <title>Swift Task Planner | Update Task</title>
+      </Helmet>
       <h2 className="text-center font-bold text-3xl">Update Task</h2>
       <div>
         <form className="card-body" onSubmit={handleSubmit(onSubmit)}>
