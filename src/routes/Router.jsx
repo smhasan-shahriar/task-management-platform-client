@@ -4,6 +4,7 @@ import Home from "../pages/Home";
 import ErrorPage from "../pages/ErrorPage";
 import LogIn from "../pages/LogIn";
 import Register from "../pages/Register";
+import CreateTask from "../pages/CreateTask";
 
 export const router = createBrowserRouter([
     {
@@ -22,6 +23,10 @@ export const router = createBrowserRouter([
         {
             path: "/register",
             element: <Register />
+        },
+        {
+            path: "/createtask",
+            element: <CreateTask />
         }
         
       ]

@@ -19,7 +19,7 @@ const Navbar = () => {
       {user ? (
         <>
           <li>
-            <NavLink to="/newtask">New Task</NavLink>
+            <NavLink to="/createtask">New Task</NavLink>
           </li>
           <li>
             <NavLink to="/profile">Profile</NavLink>
