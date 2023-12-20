@@ -82,12 +82,7 @@ const Navbar = () => {
         </div>
         {user ? (
           <div className="navbar-end lg:space-x-4 md:space-x-2 space-x-1">
-            <p>{user?.displayName}</p>
-            <img
-              className="w-12 h-12 rounded-full object-cover"
-              src={user.photoURL}
-              alt=""
-            />
+           
             <Link
               onClick={handleLogOut}
               className="btn font-bold normal-case md:text-lg"
