@@ -1,5 +1,8 @@
 import React from "react";
 import useAuth from "../hooks/useAuth";
+import { MdDelete } from "react-icons/md";
+import { FaEdit } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -25,28 +28,21 @@ const Dashboard = () => {
             <div className="card w-96 bg-base-100 shadow-xl">
               <div className="card-body">
                 <div className="card-actions justify-end">
+                  <Link to="updatetask">
+                    <button className="btn btn-square btn-sm">
+                      <FaEdit className="text-xl text-yellow-500" />
+                    </button>
+                  </Link>
+
                   <button className="btn btn-square btn-sm">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
+                    <MdDelete className="text-xl text-red-600" />
                   </button>
                 </div>
                 <p className="font-bold text-lg">Title</p>
                 <p className="font-medium">Description</p>
                 <div className="flex justify-start">
-                    <p>date</p>
-                    <p className="">priority</p>
+                  <p>date</p>
+                  <p className="">priority</p>
                 </div>
               </div>
             </div>
@@ -54,27 +50,17 @@ const Dashboard = () => {
               <div className="card-body">
                 <div className="card-actions justify-end">
                   <button className="btn btn-square btn-sm">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
+                    <FaEdit className="text-xl text-yellow-500" />
+                  </button>
+                  <button className="btn btn-square btn-sm">
+                    <MdDelete className="text-xl text-red-600" />
                   </button>
                 </div>
                 <p className="font-bold text-lg">Title</p>
                 <p className="font-medium">Description</p>
                 <div className="flex justify-start">
-                    <p>date</p>
-                    <p className="">priority</p>
+                  <p>date</p>
+                  <p className="">priority</p>
                 </div>
               </div>
             </div>
@@ -89,27 +75,17 @@ const Dashboard = () => {
               <div className="card-body">
                 <div className="card-actions justify-end">
                   <button className="btn btn-square btn-sm">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
+                    <FaEdit className="text-xl text-yellow-500" />
+                  </button>
+                  <button className="btn btn-square btn-sm">
+                    <MdDelete className="text-xl text-red-600" />
                   </button>
                 </div>
                 <p className="font-bold text-lg">Title</p>
                 <p className="font-medium">Description</p>
                 <div className="flex justify-start">
-                    <p>date</p>
-                    <p className="">priority</p>
+                  <p>date</p>
+                  <p className="">priority</p>
                 </div>
               </div>
             </div>
@@ -117,27 +93,17 @@ const Dashboard = () => {
               <div className="card-body">
                 <div className="card-actions justify-end">
                   <button className="btn btn-square btn-sm">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
+                    <FaEdit className="text-xl text-yellow-500" />
+                  </button>
+                  <button className="btn btn-square btn-sm">
+                    <MdDelete className="text-xl text-red-600" />
                   </button>
                 </div>
                 <p className="font-bold text-lg">Title</p>
                 <p className="font-medium">Description</p>
                 <div className="flex justify-start">
-                    <p>date</p>
-                    <p className="">priority</p>
+                  <p>date</p>
+                  <p className="">priority</p>
                 </div>
               </div>
             </div>
@@ -152,27 +118,17 @@ const Dashboard = () => {
               <div className="card-body">
                 <div className="card-actions justify-end">
                   <button className="btn btn-square btn-sm">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
+                    <FaEdit className="text-xl text-yellow-500" />
+                  </button>
+                  <button className="btn btn-square btn-sm">
+                    <MdDelete className="text-xl text-red-600" />
                   </button>
                 </div>
                 <p className="font-bold text-lg">Title</p>
                 <p className="font-medium">Description</p>
                 <div className="flex justify-start">
-                    <p>date</p>
-                    <p className="">priority</p>
+                  <p>date</p>
+                  <p className="">priority</p>
                 </div>
               </div>
             </div>
@@ -180,27 +136,17 @@ const Dashboard = () => {
               <div className="card-body">
                 <div className="card-actions justify-end">
                   <button className="btn btn-square btn-sm">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
+                    <FaEdit className="text-xl text-yellow-500" />
+                  </button>
+                  <button className="btn btn-square btn-sm">
+                    <MdDelete className="text-xl text-red-600" />
                   </button>
                 </div>
                 <p className="font-bold text-lg">Title</p>
                 <p className="font-medium">Description</p>
                 <div className="flex justify-start">
-                    <p>date</p>
-                    <p className="">priority</p>
+                  <p>date</p>
+                  <p className="">priority</p>
                 </div>
               </div>
             </div>

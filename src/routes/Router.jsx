@@ -5,6 +5,7 @@ import ErrorPage from "../pages/ErrorPage";
 import LogIn from "../pages/LogIn";
 import Register from "../pages/Register";
 import CreateTask from "../pages/CreateTask";
+import UpdateTask from "../pages/UpdateTask";
 
 export const router = createBrowserRouter([
     {
@@ -27,6 +28,10 @@ export const router = createBrowserRouter([
         {
             path: "/createtask",
             element: <CreateTask />
+        },
+        {
+            path: "/updatetask",
+            element: <UpdateTask />
         }
         
       ]
