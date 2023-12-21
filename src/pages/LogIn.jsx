@@ -39,6 +39,7 @@ const LogIn = () => {
         //     }
         //   });
         toast("You have successfully logged in with Google");
+        navigate(location?.state ? location.state : "/");
       })
       .catch((error) => {
         console.log(error.message);

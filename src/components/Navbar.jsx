@@ -16,9 +16,6 @@ const Navbar = () => {
       <li>
         <NavLink to="/">Home</NavLink>
       </li>
-      <li>
-        <NavLink to="/demo">Demo</NavLink>
-      </li>
       {user ? (
         <>
           <li>
@@ -42,7 +39,7 @@ const Navbar = () => {
   );
   return (
     <div>
-      <div className="navbar bg-base-100 max-w-[1260px] mx-auto">
+      <div className="navbar bg-base-100 max-w-[1440px] mx-auto">
         <div className="navbar-start">
           <div
             className="dropdown"

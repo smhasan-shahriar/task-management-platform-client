@@ -10,9 +10,9 @@ import { DndProvider, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import useTask from "../hooks/useTask";
 import { toast } from "react-toastify";
-import TouchDashboard from "./TouchDashboard";
+import { TouchBackend } from "react-dnd-touch-backend";
 
-const Dashboard = () => {
+const TouchDashboard = () => {
   const { user, loading } = useAuth();
   const axiosPublic = useAxiosPublic();
 
@@ -81,46 +81,46 @@ const Dashboard = () => {
   // });
   return (
     <>
-      <DndProvider backend={HTML5Backend}>
-        <div className="max-w-[1440px] mx-auto px-2 mb-10">
-          <div className="py-2  w-full flex items-center justify-between px-5 shadow-xl my-3 rounded-full">
-            <p className=" font-bold text-2xl">Dashboard</p>
-            <div className="flex items-center gap-4">
-              <Link to="createTask" className="btn">
-                Create New Task
-              </Link>
-              <p className=" font-medium">{user?.displayName}</p>
-              <img
-                className="w-12 h-12 rounded-full object-cover"
-                src={user.photoURL}
-                alt=""
-              />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-            {statuses.map((status, index) => (
-              <Section
-                key={index}
-                status={status}
-                tasks={toDoList}
-                toDos={toDos}
-                ongoing={ongoing}
-                completed={completed}
-                handleRemove={handleRemove}
-                axiosPublic={axiosPublic}
-                toDoList={toDoList}
-                toDoRefetch={toDoRefetch}
-              ></Section>
-            ))}
+  
+    <DndProvider  backend={TouchBackend} options={{enableMouseEvents: true}}>
+      <div className="min-h-screen max-w-[1440px] mx-auto px-2 hidden">
+        <div className="py-2  w-full flex items-center justify-between px-5 shadow-xl my-3 rounded-full">
+          <p className=" font-bold text-2xl">Dashboard</p>
+          <div className="flex items-center gap-4">
+            <p className=" font-medium">{user?.displayName}</p>
+            <img
+              className="w-12 h-12 rounded-full object-cover"
+              src={user.photoURL}
+              alt=""
+            />
           </div>
         </div>
-      </DndProvider>
+       
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mt-5">
+          {statuses.map((status, index) => (
+            <Section
+              key={index}
+              status={status}
+              tasks={toDoList}
+              toDos={toDos}
+              ongoing={ongoing}
+              completed={completed}
+              handleRemove={handleRemove}
+              axiosPublic = {axiosPublic}
+              toDoList = {toDoList}
+              toDoRefetch = {toDoRefetch}
+            ></Section>
+          ))}
+        </div>
+      </div>
+    </DndProvider>
+    
     </>
+    
   );
 };
 
-export default Dashboard;
+export default TouchDashboard;
 
 const Section = ({
   status,
@@ -131,15 +131,16 @@ const Section = ({
   handleRemove,
   axiosPublic,
   toDoList,
-  toDoRefetch,
+  toDoRefetch
 }) => {
+
   const [{ isOver }, drop] = useDrop(() => ({
     accept: "task",
     drop: (item) => addItemToSection(item.id),
     collect: (monitor) => ({
-      isOver: !!monitor.isOver(),
-    }),
-  }));
+      isOver: !!monitor.isOver()
+    })
+  }))
 
   let text = "todo";
   let tasksToMap = toDos;
@@ -156,31 +157,22 @@ const Section = ({
     tasksToMap = completed;
   }
   const addItemToSection = (id) => {
-    axiosPublic
-      .put(`/update-task-status/${id}`, { status: status })
-      .then((res) => {
-        if (res.data.modifiedCount > 0) {
-          toast(`task moved to ${status}`);
-          toDoRefetch();
-        }
-      });
-  };
+    axiosPublic.put(`/update-task-status/${id}`, {status: status})
+    .then(res => {
+      if(res.data.modifiedCount > 0){
+        toast(`task moved to ${status}`);
+        toDoRefetch()
+      }
+    })
+  }
   return (
-    <div
-      ref={drop}
-      className={`w-full min-h-[300px] shadow-xl pb-5 rounded-lg ${
-        isOver ? "bg-violet-200" : ""
-      }`}
-    >
+    <div ref={drop} className={`w-full shadow-xl pb-5 rounded-lg ${isOver ? "bg-violet-200" : ""}`}>
       <Header text={text} count={tasksToMap?.length}></Header>
       <div className="flex flex-col justify-center items-center gap-5 mt-5">
         {tasksToMap?.length > 0 &&
           tasksToMap?.map((task) => (
             <Task key={task._id} task={task} handleRemove={handleRemove}></Task>
           ))}
-          {
-            tasksToMap?.length === 0 && <div className="flex w-full min-h-[200px] justify-center items-center"><img src={"https://i.ibb.co/HVbwX61/icons8-select-none-96.png"} /></div>
-          }
       </div>
     </div>
   );

@@ -45,7 +45,7 @@ const CreateTask = () => {
 
   };
   return (
-    <div className="min-h-screen max-w-[1440px] mx-auto px-2">
+    <div className="customContainer max-w-[1440px] mx-auto px-2">
         <Helmet>
         <title>Swift Task Planner | Create Task</title>
       </Helmet>
