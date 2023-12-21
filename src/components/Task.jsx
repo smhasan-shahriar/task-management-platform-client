@@ -2,14 +2,16 @@ import { useDrag } from "react-dnd";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 
-const Task = ({ task, onEdit, onDelete }) => {
-
-
+const Task = ({ task, onEdit, handleRemove }) => {
+  const [{ isDragging }, drag] = useDrag(()=> ({
+    type: 'task',
+    item: {id: task._id},
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging()
+    })
+  }))
   return (
-    <div
-     
-      className={`card w-96 bg-base-100 shadow-xl`}
-    >
+    <div ref={drag} className={`card w-96 bg-base-100 shadow-xl cursor-grab ${isDragging ? "opacity-50" : "opacity-100"}`}>
       <div className="card-body">
         <div className="card-actions justify-end">
           <button
@@ -20,7 +22,7 @@ const Task = ({ task, onEdit, onDelete }) => {
           </button>
           <button
             className="btn btn-square btn-sm"
-            onClick={() => onDelete(task)}
+            onClick={() => handleRemove(task._id)}
           >
             <MdDelete className="text-xl text-red-600" />
           </button>

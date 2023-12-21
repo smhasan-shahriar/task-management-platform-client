@@ -6,36 +6,55 @@ import { Link } from "react-router-dom";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import Task from "./Task";
-import { DndProvider } from "react-dnd";
+import { DndProvider, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import useTask from "../hooks/useTask";
+import { toast } from "react-toastify";
 
 const Dashboard = () => {
   const { user, loading } = useAuth();
   const axiosPublic = useAxiosPublic();
-  const {tasks: toDoList} = useTask();
+
   const [toDos, setToDos] = useState([]);
   const [ongoing, setOngoing] = useState([]);
-  const [completed, setCompleted] = useState([])
-  console.log(toDoList)
+  const [completed, setCompleted] = useState([]);
+  const getToDoTasks = async () => {
+    const response = await axiosPublic.get(
+      `/all-to-do-tasks?email=${user?.email}`
+    );
+    return response.data;
+  };
+  const { data: toDoList, refetch: toDoRefetch } = useQuery({
+    queryKey: ["allToDoTasks", user?.email],
+    enabled: !loading,
+    queryFn: getToDoTasks,
+  });
 
-  useEffect(()=> {
-    const filteredToDos = toDoList.filter(task => task.status === "incomplete")
-    const filteredOngoing = toDoList.filter(task => task.status === "ongoing")
-    const filteredCompleted = toDoList.filter(task => task.status === "complete")
-
+  useEffect(() => {
+    const filteredToDos = toDoList?.filter(
+      (task) => task.status === "incomplete"
+    );
+    const filteredOngoing = toDoList?.filter(
+      (task) => task.status === "ongoing"
+    );
+    const filteredCompleted = toDoList?.filter(
+      (task) => task.status === "complete"
+    );
 
     setToDos(filteredToDos);
     setOngoing(filteredOngoing);
     setCompleted(filteredCompleted);
-  },[toDoList])
-  const statuses = ["incomplete", "ongoing", "complete"]
-  // const getToDoTasks = async () => {
-  //   const response = await axiosPublic.get(
-  //     `/all-to-do-tasks?email=${user?.email}&status=incomplete`
-  //   );
-  //   return response.data;
-  // };
+  }, [toDoList]);
+  const handleRemove = async (id) => {
+    axiosPublic.delete(`/delete-task/${id}`).then((res) => {
+      if (res.data.deletedCount > 0) {
+        toast("task deleted");
+        toDoRefetch();
+      }
+    });
+  };
+  const statuses = ["incomplete", "ongoing", "complete"];
+
   // const getOngoingTasks = async () => {
   //   const response = await axiosPublic.get(
   //     `/all-to-do-tasks?email=${user?.email}&status=ongoing`
@@ -48,11 +67,7 @@ const Dashboard = () => {
   //   );
   //   return response.data;
   // };
-  // const { data: toDoList, refetch: toDoRefetch } = useQuery({
-  //   queryKey: ["allToDoTasks", user?.email],
-  //   enabled: !loading,
-  //   queryFn: getToDoTasks,
-  // });
+
   // const { data: ongoingList, refetch: ongoingRefetch } = useQuery({
   //   queryKey: ["allOngoingTasks", user?.email],
   //   enabled: !loading,
@@ -63,141 +78,104 @@ const Dashboard = () => {
   //   enabled: !loading,
   //   queryFn: getCompletedTasks,
   // });
-  // console.log(toDoList);
   return (
-   
-
-    
-    <div className="min-h-screen max-w-[1440px] mx-auto px-2">
-      <div className="py-2 bg-gradient-to-r from-blue-500 to-violet-500 w-full flex items-center justify-between px-5">
-        <p className="text-white font-bold text-2xl">Dashboard</p>
-        <div className="flex items-center gap-4">
-          <p className="text-white font-medium">{user?.displayName}</p>
-          <img
-            className="w-12 h-12 rounded-full object-cover"
-            src={user.photoURL}
-            alt=""
-          />
+    <DndProvider backend={HTML5Backend}>
+      <div className="min-h-screen max-w-[1440px] mx-auto px-2">
+        <div className="py-2 bg-gradient-to-r from-blue-500 to-violet-500 w-full flex items-center justify-between px-5">
+          <p className="text-white font-bold text-2xl">Dashboard</p>
+          <div className="flex items-center gap-4">
+            <p className="text-white font-medium">{user?.displayName}</p>
+            <img
+              className="w-12 h-12 rounded-full object-cover"
+              src={user.photoURL}
+              alt=""
+            />
+          </div>
+        </div>
+       
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mt-5">
+          {statuses.map((status, index) => (
+            <Section
+              key={index}
+              status={status}
+              tasks={toDoList}
+              toDos={toDos}
+              ongoing={ongoing}
+              completed={completed}
+              handleRemove={handleRemove}
+              axiosPublic = {axiosPublic}
+              toDoList = {toDoList}
+              toDoRefetch = {toDoRefetch}
+            ></Section>
+          ))}
         </div>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mt-5">
-        <div className="w-full shadow-xl py-5 rounded-lg">
-          <div className="text-center font-medium py-2 rounded-lg  bg-gradient-to-r from-blue-500 to-violet-500 text-white text-xl">
-            To Do : {toDoList?.length}
-          </div>
-          <div className="flex flex-col justify-center items-center gap-5">
-            {toDoList?.map((task) => (
-              <Task key={task._id} task={task}></Task>
-            ))}
-          </div>
-        </div>
-        <div className="w-full shadow-xl py-5 rounded-lg">
-          <div className="text-center font-medium py-2 rounded-lg  bg-gradient-to-r from-blue-500 to-violet-500 text-white text-xl">
-            Ongoing
-          </div>
-          <div className="flex flex-col justify-center items-center gap-5">
-            <div className="card w-96 bg-base-100 shadow-xl">
-              <div className="card-body">
-                <div className="card-actions justify-end">
-                  <button className="btn btn-square btn-sm">
-                    <FaEdit className="text-xl text-yellow-500" />
-                  </button>
-                  <button className="btn btn-square btn-sm">
-                    <MdDelete className="text-xl text-red-600" />
-                  </button>
-                </div>
-                <p className="font-bold text-lg">Title</p>
-                <p className="font-medium">Description</p>
-                <div className="flex justify-start">
-                  <p>date</p>
-                  <p className="">priority</p>
-                </div>
-              </div>
-            </div>
-            <div className="card w-96 bg-base-100 shadow-xl">
-              <div className="card-body">
-                <div className="card-actions justify-end">
-                  <button className="btn btn-square btn-sm">
-                    <FaEdit className="text-xl text-yellow-500" />
-                  </button>
-                  <button className="btn btn-square btn-sm">
-                    <MdDelete className="text-xl text-red-600" />
-                  </button>
-                </div>
-                <p className="font-bold text-lg">Title</p>
-                <p className="font-medium">Description</p>
-                <div className="flex justify-start">
-                  <p>date</p>
-                  <p className="">priority</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="w-full shadow-xl py-5 rounded-lg">
-          <div className="text-center font-medium py-2 rounded-lg  bg-gradient-to-r from-blue-500 to-violet-500 text-white text-xl">
-            Completed
-          </div>
-          <div className="flex flex-col justify-center items-center gap-5">
-            <div className="card w-96 bg-base-100 shadow-xl">
-              <div className="card-body">
-                <div className="card-actions justify-end">
-                  <button className="btn btn-square btn-sm">
-                    <FaEdit className="text-xl text-yellow-500" />
-                  </button>
-                  <button className="btn btn-square btn-sm">
-                    <MdDelete className="text-xl text-red-600" />
-                  </button>
-                </div>
-                <p className="font-bold text-lg">Title</p>
-                <p className="font-medium">Description</p>
-                <div className="flex justify-start">
-                  <p>date</p>
-                  <p className="">priority</p>
-                </div>
-              </div>
-            </div>
-            <div className="card w-96 bg-base-100 shadow-xl">
-              <div className="card-body">
-                <div className="card-actions justify-end">
-                  <button className="btn btn-square btn-sm">
-                    <FaEdit className="text-xl text-yellow-500" />
-                  </button>
-                  <button className="btn btn-square btn-sm">
-                    <MdDelete className="text-xl text-red-600" />
-                  </button>
-                </div>
-                <p className="font-bold text-lg">Title</p>
-                <p className="font-medium">Description</p>
-                <div className="flex justify-start">
-                  <p>date</p>
-                  <p className="">priority</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mt-5">
-            {
-                statuses.map((status, index) => (
-                    <Section key={index} status={status}>
-
-                    </Section>
-                ))
-            }
-        </div>
-    </div>
-  
+    </DndProvider>
   );
 };
 
 export default Dashboard;
 
-const Section = ({status}) => {
-  return(
-    <div className="w-full shadow-xl py-5 rounded-lg">
-     <h2>{status}</h2>
+const Section = ({
+  status,
+  tasks,
+  toDos,
+  ongoing,
+  completed,
+  handleRemove,
+  axiosPublic,
+  toDoList,
+  toDoRefetch
+}) => {
+
+  const [{ isOver }, drop] = useDrop(() => ({
+    accept: "task",
+    drop: (item) => addItemToSection(item.id),
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver()
+    })
+  }))
+
+  let text = "todo";
+  let tasksToMap = toDos;
+  if (status === "incomplete") {
+    text = "To Do";
+    tasksToMap = toDos;
+  }
+  if (status === "ongoing") {
+    text = "Ongoing";
+    tasksToMap = ongoing;
+  }
+  if (status === "complete") {
+    text = "Complete";
+    tasksToMap = completed;
+  }
+  const addItemToSection = (id) => {
+    axiosPublic.put(`/update-task-status/${id}`, {status: status})
+    .then(res => {
+      if(res.data.modifiedCount > 0){
+        toast(`task moved to ${status}`);
+        toDoRefetch()
+      }
+    })
+  }
+  return (
+    <div ref={drop} className={`w-full shadow-xl pb-5 rounded-lg ${isOver ? "bg-violet-200" : ""}`}>
+      <Header text={text} count={tasksToMap?.length}></Header>
+      <div className="flex flex-col justify-center items-center gap-5 mt-5">
+        {tasksToMap?.length > 0 &&
+          tasksToMap?.map((task) => (
+            <Task key={task._id} task={task} handleRemove={handleRemove}></Task>
+          ))}
+      </div>
     </div>
-  )
-}
+  );
+};
+
+const Header = ({ text, count }) => {
+  return (
+    <div className="text-center font-medium py-2 rounded-lg  bg-gradient-to-r from-blue-500 to-violet-500 text-white text-xl">
+      {text} {count}
+    </div>
+  );
+};
