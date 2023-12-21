@@ -5,11 +5,14 @@ import { toast } from "react-toastify";
 import useAuth from "../hooks/useAuth";
 import { Helmet } from "react-helmet";
 import useAxiosPublic from "../hooks/useAxiosPublic";
+import useTask from "../hooks/useTask";
 
 const CreateTask = () => {
   const currentDate = new Date();
   const axiosPublic = useAxiosPublic();
   const {user} = useAuth();
+  const {tasks, setTasks} = useTask();
+
   const {
     register,
     handleSubmit,
@@ -26,9 +29,13 @@ const CreateTask = () => {
         title: data.title,
         description: data.description,
         deadline: data.deadline,
-        priority: data.priority
+        priority: data.priority,
+        status: 'incomplete'
     }
-    console.log(newTask)
+    setTasks(prev => {
+      const list = [...prev, newTask]
+      return list;
+    })
     axiosPublic.post('/create-new-task', newTask)
     .then(res => {
         if(res.data.insertedId) {
