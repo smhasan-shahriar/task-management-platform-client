@@ -16,13 +16,13 @@ const Navbar = () => {
       <li>
         <NavLink to="/">Home</NavLink>
       </li>
+      <li>
+        <NavLink to="/contact">Contact Us</NavLink>
+      </li>
       {user ? (
         <>
           <li>
             <NavLink to="/createtask">New Task</NavLink>
-          </li>
-          <li>
-            <NavLink to="/contact">Contact Us</NavLink>
           </li>
         </>
       ) : (
@@ -82,7 +82,6 @@ const Navbar = () => {
         </div>
         {user ? (
           <div className="navbar-end lg:space-x-4 md:space-x-2 space-x-1">
-           
             <Link
               onClick={handleLogOut}
               className="btn font-bold normal-case md:text-lg"
@@ -91,9 +90,7 @@ const Navbar = () => {
             </Link>
           </div>
         ) : (
-          <div className="navbar-end">
-            
-          </div>
+          <div className="navbar-end"></div>
         )}
       </div>
     </div>
