@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <div className="bg-neutral ">
+    <div className="bg-neutral mt-10">
       <footer className="footer p-10 text-neutral-content max-w-[1440px] mx-auto">
         <aside>
           <div className="flex items-center gap-3">
