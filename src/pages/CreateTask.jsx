@@ -9,9 +9,9 @@ import useTask from "../hooks/useTask";
 
 const CreateTask = () => {
   const currentDate = new Date();
+  currentDate.setHours(0, 0, 0, 0);
   const axiosPublic = useAxiosPublic();
   const {user} = useAuth();
-  const {tasks, setTasks} = useTask();
 
   const {
     register,
@@ -21,7 +21,7 @@ const CreateTask = () => {
   const onSubmit = (data) => {
     const inputDate = new Date(data.deadline);
     if (inputDate < currentDate) {
-      toast("Deadline Should be in the future");
+      toast("Deadline Should not be in the past");
       return;
     }
     const newTask = {
@@ -32,10 +32,7 @@ const CreateTask = () => {
         priority: data.priority,
         status: 'incomplete'
     }
-    setTasks(prev => {
-      const list = [...prev, newTask]
-      return list;
-    })
+
     axiosPublic.post('/create-new-task', newTask)
     .then(res => {
         if(res.data.insertedId) {

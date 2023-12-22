@@ -36,6 +36,8 @@ const Register = () => {
         //       navigate("/");
         //     }
         //   });
+        toast("You have successfully registered with Google");
+        navigate("/");
       })
       .catch((error) => {
         console.log(error.message);

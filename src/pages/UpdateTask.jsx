@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 
 const UpdateTask = () => {
   const currentDate = new Date();
+  currentDate.setHours(0, 0, 0, 0);
   const navigate = useNavigate();
   const axiosPublic = useAxiosPublic();
   const {id} = useParams();
@@ -27,9 +28,9 @@ const UpdateTask = () => {
   const handleUpdate= (e) => {
     e.preventDefault();
     const form = e.target;
-    const inputDate = new Date(form.deadline);
+    const inputDate = new Date(form.deadline.value);
     if (inputDate < currentDate) {
-        toast("Deadline Should be in the future");
+        toast("Deadline Should not be in the past");
         return;
       }
       const updatedTask = {

@@ -10,6 +10,10 @@ const Task = ({ task, handleRemove, handleUpdate, statusChange }) => {
       isDragging: !!monitor.isDragging()
     })
   }))
+  const remaining = Math.ceil(
+    (new Date(task.deadline).getTime() - new Date().getTime()) /
+      (1000 * 60 * 60 * 24)
+  )
   const statuses = ["incomplete", "ongoing", "complete"];
   const changeableStatuses = statuses.filter(item => item !== task.status)
   return (
@@ -32,13 +36,10 @@ const Task = ({ task, handleRemove, handleUpdate, statusChange }) => {
         <p className="font-bold text-lg">{task.title}</p>
         <p className="font-medium">{task.description}</p>
         <div className="flex justify-start items-center gap-2">
-          <p>
-            {task.deadline} (
-            {Math.floor(
-              (new Date(task.deadline).getTime() - new Date().getTime()) /
-                (1000 * 60 * 60 * 24)
-            )}{" "}
-            days Left){" "}
+          <p className={`font-medium ${remaining <= 2 && `text-red-600`} ${remaining < 4 && remaining > 2 && `text-yellow-600`} ${remaining > 4 && `text-green-600`} ${task.status === 'complete' && 'text-black'}`}>
+            Deadline: {task.deadline} (
+            {remaining > 0 ? remaining : -(remaining)}{" "}
+            {`${remaining >= 0 && remaining <= 1 ? 'day left' : ''}`}{`${remaining > 1 ? 'days left' : ''}`}{`${remaining < 0 && remaining >= -1 ? 'day passed' : ''}`}{`${remaining <-1 ? 'days passed' : ''}`}){" "}
           </p>
           <span className="bg-gray-200 px-2 py-1">{task.priority}</span>
         </div>
