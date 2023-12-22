@@ -7,6 +7,7 @@ import Register from "../pages/Register";
 import CreateTask from "../pages/CreateTask";
 import UpdateTask from "../pages/UpdateTask";
 import PrivateRoutes from "./PrivateRoutes";
+import Contact from "../pages/Contact";
 
 export const router = createBrowserRouter([
     {
@@ -31,8 +32,12 @@ export const router = createBrowserRouter([
             element:  <PrivateRoutes><CreateTask /></PrivateRoutes> 
         },
         {
-            path: "/updatetask",
+            path: "/updatetask/:id",
             element: <UpdateTask />
+        },
+        {
+            path: "/contact",
+            element: <Contact />
         }
         
       ]

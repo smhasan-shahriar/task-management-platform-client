@@ -2,7 +2,7 @@ import React, { createContext, useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import Task from "./Task";
@@ -15,6 +15,7 @@ import TouchDashboard from "./TouchDashboard";
 const Dashboard = () => {
   const { user, loading } = useAuth();
   const axiosPublic = useAxiosPublic();
+  const navigate = useNavigate();
 
   const [toDos, setToDos] = useState([]);
   const [ongoing, setOngoing] = useState([]);
@@ -54,6 +55,9 @@ const Dashboard = () => {
       }
     });
   };
+  const handleUpdate = id => {
+    navigate(`/updatetask/${id}`)
+  }
   const statuses = ["incomplete", "ongoing", "complete"];
 
   // const getOngoingTasks = async () => {
@@ -108,6 +112,7 @@ const Dashboard = () => {
                 ongoing={ongoing}
                 completed={completed}
                 handleRemove={handleRemove}
+                handleUpdate= {handleUpdate}
                 axiosPublic={axiosPublic}
                 toDoList={toDoList}
                 toDoRefetch={toDoRefetch}
@@ -129,6 +134,7 @@ const Section = ({
   ongoing,
   completed,
   handleRemove,
+  handleUpdate,
   axiosPublic,
   toDoList,
   toDoRefetch,
@@ -176,7 +182,7 @@ const Section = ({
       <div className="flex flex-col justify-center items-center gap-5 mt-5">
         {tasksToMap?.length > 0 &&
           tasksToMap?.map((task) => (
-            <Task key={task._id} task={task} handleRemove={handleRemove}></Task>
+            <Task key={task._id} task={task} handleRemove={handleRemove} handleUpdate={handleUpdate}></Task>
           ))}
           {
             tasksToMap?.length === 0 && <div className="flex w-full min-h-[200px] justify-center items-center"><img src={"https://i.ibb.co/HVbwX61/icons8-select-none-96.png"} /></div>

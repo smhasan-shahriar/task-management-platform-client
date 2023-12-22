@@ -2,7 +2,7 @@ import { useDrag } from "react-dnd";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 
-const Task = ({ task, onEdit, handleRemove }) => {
+const Task = ({ task, handleRemove, handleUpdate }) => {
   const [{ isDragging }, drag] = useDrag(()=> ({
     type: 'task',
     item: {id: task._id},
@@ -16,7 +16,7 @@ const Task = ({ task, onEdit, handleRemove }) => {
         <div className="card-actions justify-end">
           <button
             className="btn btn-square btn-sm"
-            onClick={() => onEdit(task)}
+            onClick={() => handleUpdate(task._id)}
           >
             <FaEdit className="text-xl text-yellow-500" />
           </button>

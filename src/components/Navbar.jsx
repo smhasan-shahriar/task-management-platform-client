@@ -22,7 +22,7 @@ const Navbar = () => {
             <NavLink to="/createtask">New Task</NavLink>
           </li>
           <li>
-            <NavLink to="/profile">Profile</NavLink>
+            <NavLink to="/contact">Contact Us</NavLink>
           </li>
         </>
       ) : (
