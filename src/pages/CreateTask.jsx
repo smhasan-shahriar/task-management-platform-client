@@ -19,7 +19,7 @@ const CreateTask = () => {
   const onSubmit = (data) => {
     const inputDate = new Date(data.deadline);
     if (inputDate < currentDate) {
-      toast("Deadline Should not be in the past");
+      toast("Deadline should not be in the past");
       return;
     }
     const newTask = {

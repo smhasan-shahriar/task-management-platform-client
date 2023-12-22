@@ -30,7 +30,7 @@ const UpdateTask = () => {
     const form = e.target;
     const inputDate = new Date(form.deadline.value);
     if (inputDate < currentDate) {
-      toast("Deadline Should not be in the past");
+      toast("Deadline should not be in the past");
       return;
     }
     const updatedTask = {
