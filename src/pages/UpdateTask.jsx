@@ -10,6 +10,7 @@ const UpdateTask = () => {
   currentDate.setHours(0, 0, 0, 0);
   const navigate = useNavigate();
   const axiosPublic = useAxiosPublic();
+  window.scrollTo({ top: 0 });
   const { id } = useParams();
   const getTask = async () => {
     const response = await axiosPublic.get(`/view-task/${id}`);
