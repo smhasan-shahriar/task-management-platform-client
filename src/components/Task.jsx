@@ -54,7 +54,7 @@ const Task = ({ task, handleRemove, handleUpdate, statusChange }) => {
         </div>
         <div className="flex gap-2 flex-row md:flex-col">
           {changeableStatuses.map((item,index) => (
-            <button onClick={() => statusChange(task._id, item)} className="btn btn-primary lg:hidden" key={index}>{item === 'incomplete' && 'Set to To Do'} {item === 'ongoing' && 'Set to Ongoing'} {item === 'complete' && 'Set to Complete'}</button>
+            <button onClick={() => statusChange(task._id, item)} className="btn btn-primary lg:hidden" key={index}>{item === 'incomplete' && 'Set to To-Do'} {item === 'ongoing' && 'Set to Ongoing'} {item === 'complete' && 'Set to Complete'}</button>
           ))}
         </div>
       </div>

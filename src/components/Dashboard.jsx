@@ -137,7 +137,7 @@ const Section = ({
   let textColor;
   let tasksToMap = toDos;
   if (status === "incomplete") {
-    text = "To Do";
+    text = "To-Do";
     bg = 'bg-blue-200'
     textColor = 'text-blue-800'
     tasksToMap = toDos;
@@ -159,7 +159,7 @@ const Section = ({
       .put(`/update-task-status/${id}`, { status: status })
       .then((res) => {
         if (res.data.modifiedCount > 0) {
-          toast(`${status === 'incomplete' ? `Task moved to To Do List` : ``} ${status === 'ongoing' ? `Task moved to Ongoing List` : ``} ${status === 'complete' ? `Task moved to Complete List` : ``}`)
+          toast(`${status === 'incomplete' ? `Task moved to To-Do List` : ``} ${status === 'ongoing' ? `Task moved to Ongoing List` : ``} ${status === 'complete' ? `Task moved to Complete List` : ``}`)
           toDoRefetch();
         }
       });

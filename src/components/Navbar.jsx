@@ -16,9 +16,7 @@ const Navbar = () => {
       <li>
         <NavLink to="/">Home</NavLink>
       </li>
-      <li>
-        <NavLink to="/contact">Contact Us</NavLink>
-      </li>
+      
       {user ? (
         <>
           <li>
@@ -35,6 +33,9 @@ const Navbar = () => {
           </li>
         </>
       )}
+      <li>
+        <NavLink to="/contact">Contact Us</NavLink>
+      </li>
     </>
   );
   return (
