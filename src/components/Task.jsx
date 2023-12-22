@@ -41,7 +41,16 @@ const Task = ({ task, handleRemove, handleUpdate, statusChange }) => {
             {remaining > 0 ? remaining : -(remaining)}{" "}
             {`${remaining >= 0 && remaining <= 1 ? 'day left' : ''}`}{`${remaining > 1 ? 'days left' : ''}`}{`${remaining < 0 && remaining >= -1 ? 'day passed' : ''}`}{`${remaining <-1 ? 'days passed' : ''}`}){" "}
           </p>
-          <span className="bg-gray-200 px-2 py-1">{task.priority}</span>
+          {
+            task.priority === 'Low' && <><img className="w-8" src="https://i.ibb.co/MRQn7yB/low-priority.png" /> <span className="text-green-600">{task.priority}</span></> 
+          }
+          {
+            task.priority === 'Moderate' && <><img className="w-8" src="https://i.ibb.co/n172Wj2/medium-priority.png" /> <span className="text-yellow-600">{task.priority}</span></> 
+          }
+          {
+            task.priority === 'High' && <><img className="w-8" src="https://i.ibb.co/J5vc3hR/high-priority.png" /> <span className="text-red-600">{task.priority}</span></> 
+          }
+          
         </div>
         <div className="flex gap-2 flex-row md:flex-col">
           {changeableStatuses.map((item,index) => (
