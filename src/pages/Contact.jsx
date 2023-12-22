@@ -31,7 +31,7 @@ const Contact = () => {
       );
   };
   return (
-    <div className="max-w-[1440px] min-h-screen mx-auto px-10">
+    <div className="customContainer max-w-[1440px] min-h-screen mx-auto px-10">
       <h1 className="font-bold text-4xl my-10 mx-auto text-center">
         Contact Us
       </h1>
@@ -83,15 +83,15 @@ const Contact = () => {
               placeholder="Description"
             ></textarea>
           </label>
-          <div className="mx-auto text-center my-5">
+         
             <input
-              className="btn btn-primary mx-auto"
-              name="description"
+              className="btn btn-primary mx-auto w-full mt-5"
+              
               type="submit"
               value="Submit"
-              required
+             
             />
-          </div>
+        
         </form>
       </div>
     </div>

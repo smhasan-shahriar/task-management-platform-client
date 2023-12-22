@@ -46,7 +46,7 @@ const CreateTask = () => {
         <Helmet>
         <title>Swift Task Planner | Create Task</title>
       </Helmet>
-      <h2 className="text-center font-bold text-3xl">Create Task</h2>
+      <h2 className="font-bold text-4xl my-10 mx-auto text-center">Create Task</h2>
       <div>
         <form className="card-body" onSubmit={handleSubmit(onSubmit)}>
           <div className="form-control">
