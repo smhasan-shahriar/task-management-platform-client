@@ -1,12 +1,9 @@
-import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import AuthProvider, { AuthContext } from "../Providers/AuthProvider";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { AiOutlineGoogle } from "react-icons/ai";
 
 import useAuth from "../hooks/useAuth";
-import { Helmet } from "react-helmet";
 
 const Register = () => {
   const { createUser, updateUserProfile, socialLogIn } = useAuth();
@@ -14,29 +11,6 @@ const Register = () => {
   const handleSocialLogin = () => {
     socialLogIn()
       .then((result) => {
-        console.log(result.user);
-        const loggedUser = { email: result.user.email };
-        // axios
-        //   .post("https://the-blog-hub-server.vercel.app/jwt", loggedUser, {
-        //     withCredentials: true,
-        //   })
-        //   .then((res) => {
-        //     console.log("token response", res.data);
-        //   });
-        // const newUser = result.user;
-        // const userEntry = {
-        //   userName: newUser.displayName,
-        //   userEmail: newUser.email,
-        //   userImage: newUser.photoURL,
-        // };
-        // axios
-        //   .post("https://the-blog-hub-server.vercel.app/users", userEntry)
-        //   .then((res) => {
-        //     if (res.data.insertedId) {
-        //       toast("You have successfully registered with Google");
-        //       navigate("/");
-        //     }
-        //   });
         toast("You have successfully registered with Google");
         navigate("/");
       })
@@ -67,32 +41,6 @@ const Register = () => {
           console.log(result.user);
           updateUserProfile(name, image)
             .then(() => {
-              const newUser = result.user;
-              const loggedUser = { email: result.user.email };
-              //   axios
-              //     .post(
-              //       "https://the-blog-hub-server.vercel.app/jwt",
-              //       loggedUser,
-              //       {
-              //         withCredentials: true,
-              //       }
-              //     )
-              //     .then((res) => {
-              //       console.log("token response", res.data);
-              //     });
-              //   const userEntry = {
-              //     userName: newUser.displayName,
-              //     userEmail: newUser.email,
-              //     userImage: newUser.photoURL,
-              //   };
-              //   axios
-              //     .post("https://the-blog-hub-server.vercel.app/users", userEntry)
-              //     .then((res) => {
-              //       if (res.data.insertedId) {
-              //         toast("You have successfully registered");
-              //         navigate("/");
-              //       }
-              //     });
               toast("You have successfully registered");
               navigate("/");
             })
@@ -107,9 +55,6 @@ const Register = () => {
   };
   return (
     <div className="min-h-screen mt-20 md:mt-0 py-20  bg-gradient-to-r from-cyan-500 to-blue-500 flex justify-center items-center">
-      <Helmet>
-        <title>Swift Task Planner | Sign Up</title>
-      </Helmet>
       <div className="flex items-center justify-center">
         <div>
           <h2 className="text-5xl font-bold mb-10 text-center text-white">

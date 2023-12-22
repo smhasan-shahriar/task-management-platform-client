@@ -1,14 +1,11 @@
-import React, { createContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
-import { MdDelete } from "react-icons/md";
-import { FaEdit } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import Task from "./Task";
 import { DndProvider, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import useTask from "../hooks/useTask";
 import { toast } from "react-toastify";
 import { TouchBackend } from "react-dnd-touch-backend";
 
@@ -69,29 +66,6 @@ const Dashboard = () => {
         }
       });
   };
-  // const getOngoingTasks = async () => {
-  //   const response = await axiosPublic.get(
-  //     `/all-to-do-tasks?email=${user?.email}&status=ongoing`
-  //   );
-  //   return response.data;
-  // };
-  // const getCompletedTasks = async () => {
-  //   const response = await axiosPublic.get(
-  //     `/all-to-do-tasks?email=${user?.email}&status=complete`
-  //   );
-  //   return response.data;
-  // };
-
-  // const { data: ongoingList, refetch: ongoingRefetch } = useQuery({
-  //   queryKey: ["allOngoingTasks", user?.email],
-  //   enabled: !loading,
-  //   queryFn: getOngoingTasks,
-  // });
-  // const { data: completedList, refetch: completedRefetch } = useQuery({
-  //   queryKey: ["allCompletedTasks", user?.email],
-  //   enabled: !loading,
-  //   queryFn: getCompletedTasks,
-  // });
   return (
     <>
       <DndProvider backend={isMobile ? TouchBackend : HTML5Backend}>

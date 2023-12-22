@@ -1,4 +1,5 @@
 import {
+  GithubAuthProvider,
     GoogleAuthProvider,
     createUserWithEmailAndPassword,
     onAuthStateChanged,
@@ -27,11 +28,15 @@ import auth from "../config/firebase.config";
     };
   
     const googleProvider = new GoogleAuthProvider();
-  
+    const githubProvider = new GithubAuthProvider();
     const socialLogIn = () => {
       setLoading(true);
       return signInWithPopup(auth, googleProvider);
     };
+    const githubLogIn = () => {
+      setLoading(true);
+      return signInWithPopup(auth, githubProvider)
+    }
   
     const logOut = () => {
       setLoading(true);
@@ -47,19 +52,8 @@ import auth from "../config/firebase.config";
   
     useEffect(() => {
       const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-        const userEmail = currentUser?.email || user?.email;
-        const loggedUser = { email: userEmail };
         setUser(currentUser);
         setLoading(false);
-        // if (!loggedUser.email) {
-        //   axios
-        //     .post("https://the-blog-hub-server.vercel.app/logout", loggedUser, {
-        //       withCredentials: true,
-        //     })
-        //     .then((res) => {
-        //       console.log(res.data);
-        //     });
-        // }
       });
       return () => unsubscribe();
     }, [user?.email]);
@@ -70,6 +64,7 @@ import auth from "../config/firebase.config";
       createUser,
       logIn,
       socialLogIn,
+      githubLogIn,
       logOut,
       updateUserProfile,
     };

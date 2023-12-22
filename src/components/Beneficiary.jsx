@@ -1,7 +1,3 @@
-import React from "react";
-import Heading from "./Heading";
-import { Helmet } from "react-helmet";
-
 const Beneficiary = () => {
   return (
     <div className="customContainer max-w-[1440px] mx-auto px-2 mt-20">

@@ -1,4 +1,3 @@
-import React from "react";
 import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -11,45 +10,44 @@ const UpdateTask = () => {
   currentDate.setHours(0, 0, 0, 0);
   const navigate = useNavigate();
   const axiosPublic = useAxiosPublic();
-  const {id} = useParams();
+  const { id } = useParams();
   const getTask = async () => {
-    const response = await axiosPublic.get(`/view-task/${id}`)
+    const response = await axiosPublic.get(`/view-task/${id}`);
     return response.data;
-  }
+  };
   const { data: currentTask } = useQuery({
     queryKey: ["currentTask"],
-    queryFn: getTask
+    queryFn: getTask,
   });
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const handleUpdate= (e) => {
+  const handleUpdate = (e) => {
     e.preventDefault();
     const form = e.target;
     const inputDate = new Date(form.deadline.value);
     if (inputDate < currentDate) {
-        toast("Deadline Should not be in the past");
-        return;
-      }
-      const updatedTask = {
-        title: form.title.value,
-        description: form.description.value,
-        deadline: form.deadline.value,
-        priority: form.priority.value
+      toast("Deadline Should not be in the past");
+      return;
     }
-    axiosPublic.put(`/update-task/${id}`, updatedTask)
-    .then(res => {
-      if(res.data.modifiedCount > 0){
-        toast('Task successfully updated')
-        navigate('/')
+    const updatedTask = {
+      title: form.title.value,
+      description: form.description.value,
+      deadline: form.deadline.value,
+      priority: form.priority.value,
+    };
+    axiosPublic.put(`/update-task/${id}`, updatedTask).then((res) => {
+      if (res.data.modifiedCount > 0) {
+        toast("Task successfully updated");
+        navigate("/");
       }
-    })
+    });
   };
   return (
     <div className="min-h-screen max-w-[1440px] mx-auto px-2">
-        <Helmet>
+      <Helmet>
         <title>Swift Task Planner | Update Task</title>
       </Helmet>
       <h2 className="text-center font-bold text-3xl">Update Task</h2>
@@ -102,7 +100,11 @@ const UpdateTask = () => {
               <label className="label">
                 <span className="label-text">Priority</span>
               </label>
-              <select {...register("priority")} name="priority"  className="select select-bordered w-full">
+              <select
+                {...register("priority")}
+                name="priority"
+                className="select select-bordered w-full"
+              >
                 <option value="Low">Low</option>
                 <option value="Moderate">Moderate</option>
                 <option value="High">High</option>

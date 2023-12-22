@@ -1,7 +1,7 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import emailjs from "@emailjs/browser";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Helmet } from "react-helmet";
 
 const Contact = () => {
@@ -20,14 +20,14 @@ const Contact = () => {
       .then(
         (result) => {
           console.log(result.text);
-          if(result.text === "OK") {
-            toast('Email sent successfully')
+          if (result.text === "OK") {
+            toast("Email sent successfully");
             const data = e.target;
             data.reset();
           }
         },
         (error) => {
-          toast(error.text)
+          toast(error.text);
         }
       );
   };
@@ -87,15 +87,12 @@ const Contact = () => {
               placeholder="Description"
             ></textarea>
           </label>
-         
-            <input
-              className="btn btn-primary mx-auto w-full mt-5"
-              
-              type="submit"
-              value="Submit"
-             
-            />
-        
+
+          <input
+            className="btn btn-primary mx-auto w-full mt-5"
+            type="submit"
+            value="Submit"
+          />
         </form>
       </div>
     </div>

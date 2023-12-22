@@ -1,11 +1,8 @@
-import { getAuth } from "firebase/auth";
-import React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import useAuth from "../hooks/useAuth";
 import { Helmet } from "react-helmet";
 import useAxiosPublic from "../hooks/useAxiosPublic";
-import useTask from "../hooks/useTask";
 
 const CreateTask = () => {
   const currentDate = new Date();

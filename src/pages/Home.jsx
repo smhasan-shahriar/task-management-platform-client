@@ -1,4 +1,3 @@
-import React from 'react';
 import Banner from '../components/Banner';
 import useAuth from '../hooks/useAuth';
 import Dashboard from '../components/Dashboard';
