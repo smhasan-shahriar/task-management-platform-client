@@ -138,20 +138,20 @@ const Section = ({
   let tasksToMap = toDos;
   if (status === "incomplete") {
     text = "To-Do";
-    bg = 'bg-blue-200'
-    textColor = 'text-blue-800'
+    bg = 'bg-gradient-to-r from-[#4E65FF] to-[#A1C4FD]'
+    textColor = 'text-white'
     tasksToMap = toDos;
   }
   if (status === "ongoing") {
     text = "Ongoing";
-    bg = 'bg-yellow-200'
-    textColor = 'text-yellow-800'
+    bg = 'bg-gradient-to-r from-[#FF61D2] to-[#FE9090]'
+    textColor = 'text-white'
     tasksToMap = ongoing;
   }
   if (status === "complete") {
     text = "Complete";
-    bg = 'bg-green-200'
-    textColor = 'text-green-800'
+    bg = 'bg-gradient-to-r from-[#02AABD] to-[#00CDAC]'
+    textColor = 'text-white'
     tasksToMap = completed;
   }
   const addItemToSection = (id) => {
@@ -198,7 +198,7 @@ const Header = ({ text, count, bg, textColor }) => {
     <div className={`text-center font-medium py-2 rounded-lg  ${bg} ${textColor} text-xl`}>
       <div className="flex justify-center items-center gap-3">
         <div>{text}</div>
-        <div className="rounded-full w-7 h-7  bg-white">{count}</div>
+        <div className="rounded-full w-7 h-7  bg-white text-[#2E3192]">{count}</div>
       </div>
     </div>
   );
