@@ -6,3 +6,7 @@
 .customContainer{
     min-height: calc(100vh - 200px)
 }
+
+.untouchable{
+    touch-action: none;
+}

@@ -2,7 +2,7 @@ import { useDrag } from "react-dnd";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 
-const Task = ({ task, handleRemove, handleUpdate }) => {
+const Task = ({ task, handleRemove, handleUpdate, statusChange }) => {
   const [{ isDragging }, drag] = useDrag(()=> ({
     type: 'task',
     item: {id: task._id},
@@ -10,8 +10,10 @@ const Task = ({ task, handleRemove, handleUpdate }) => {
       isDragging: !!monitor.isDragging()
     })
   }))
+  const statuses = ["incomplete", "ongoing", "complete"];
+  const changeableStatuses = statuses.filter(item => item !== task.status)
   return (
-    <div ref={drag} className={`card w-96 bg-base-100 shadow-xl cursor-grab ${isDragging ? "opacity-50" : "opacity-100"}`}>
+    <div ref={drag} className={`card w-full bg-base-100 shadow-xl untouchable cursor-grab ${isDragging ? "opacity-50" : "opacity-100"}`}>
       <div className="card-body">
         <div className="card-actions justify-end">
           <button
@@ -39,6 +41,11 @@ const Task = ({ task, handleRemove, handleUpdate }) => {
             days Left){" "}
           </p>
           <span className="bg-gray-200 px-2 py-1">{task.priority}</span>
+        </div>
+        <div className="flex gap-2 flex-row md:flex-col">
+          {changeableStatuses.map((item,index) => (
+            <button onClick={() => statusChange(task._id, item)} className="btn btn-primary lg:hidden" key={index}>{item === 'incomplete' && 'Set to To Do'} {item === 'ongoing' && 'Set to Ongoing'} {item === 'complete' && 'Set to Complete'}</button>
+          ))}
         </div>
       </div>
     </div>
