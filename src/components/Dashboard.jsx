@@ -59,9 +59,15 @@ const Dashboard = () => {
   const statusChange = (id, newStatus) => {
     axiosPublic
       .put(`/update-task-status/${id}`, { status: newStatus })
-      .then((res) => {
+      .then(async (res) => {
         if (res.data.modifiedCount > 0) {
-          toast(`${newStatus === 'incomplete' ? `Task moved to To-Do List` : ``} ${newStatus === 'ongoing' ? `Task moved to Ongoing List` : ``} ${newStatus === 'complete' ? `Task moved to Complete List` : ``}`);
+          const taskResponse = await axiosPublic.get(`/view-task/${id}`);
+          const {deadline} = taskResponse.data;
+          const remaining = Math.ceil(
+            (new Date(deadline).getTime() - new Date().getTime()) /
+              (1000 * 60 * 60 * 24)
+          )
+          toast(`${newStatus === 'incomplete' ? `Task moved to To-Do List` : ``} ${newStatus === 'ongoing' ? `Task moved to Ongoing List` : ``} ${newStatus === 'complete' ? `Task moved to Complete List` : ``}. Deadline: ${remaining > 0 ? remaining : -(remaining)} ${remaining >= 0 && remaining <= 1 ? 'day left' : ''}${remaining > 1 ? 'days left' : ''}${remaining < 0 && remaining >= -1 ? 'day passed' : ''}${remaining <-1 ? 'days passed' : ''}`)
           toDoRefetch();
         }
       });
