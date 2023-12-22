@@ -8,7 +8,7 @@ const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const handleLogOut = () => {
     logOut()
-      .then(() => toast("logged out"))
+      .then(() => toast("Logged Out"))
       .catch((error) => console.error(error.message));
   };
   const navLinks = (

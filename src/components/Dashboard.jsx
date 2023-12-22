@@ -47,7 +47,7 @@ const Dashboard = () => {
   const handleRemove = async (id) => {
     axiosPublic.delete(`/delete-task/${id}`).then((res) => {
       if (res.data.deletedCount > 0) {
-        toast("task deleted");
+        toast("Task Deleted");
         toDoRefetch();
       }
     });
@@ -61,7 +61,7 @@ const Dashboard = () => {
       .put(`/update-task-status/${id}`, { status: newStatus })
       .then((res) => {
         if (res.data.modifiedCount > 0) {
-          toast(`task moved to ${newStatus}`);
+          toast(`${newStatus === 'incomplete' ? `Task moved to To-Do List` : ``} ${newStatus === 'ongoing' ? `Task moved to Ongoing List` : ``} ${newStatus === 'complete' ? `Task moved to Complete List` : ``}`);
           toDoRefetch();
         }
       });
@@ -157,9 +157,15 @@ const Section = ({
   const addItemToSection = (id) => {
     axiosPublic
       .put(`/update-task-status/${id}`, { status: status })
-      .then((res) => {
+      .then(async (res) => {
         if (res.data.modifiedCount > 0) {
-          toast(`${status === 'incomplete' ? `Task moved to To-Do List` : ``} ${status === 'ongoing' ? `Task moved to Ongoing List` : ``} ${status === 'complete' ? `Task moved to Complete List` : ``}`)
+          const taskResponse = await axiosPublic.get(`/view-task/${id}`);
+          const {deadline} = taskResponse.data;
+          const remaining = Math.ceil(
+            (new Date(deadline).getTime() - new Date().getTime()) /
+              (1000 * 60 * 60 * 24)
+          )
+          toast(`${status === 'incomplete' ? `Task moved to To-Do List` : ``} ${status === 'ongoing' ? `Task moved to Ongoing List` : ``} ${status === 'complete' ? `Task moved to Complete List` : ``}. Deadline: ${remaining > 0 ? remaining : -(remaining)} ${remaining >= 0 && remaining <= 1 ? 'day left' : ''}${remaining > 1 ? 'days left' : ''}${remaining < 0 && remaining >= -1 ? 'day passed' : ''}${remaining <-1 ? 'days passed' : ''}`)
           toDoRefetch();
         }
       });

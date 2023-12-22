@@ -34,7 +34,7 @@ const CreateTask = () => {
     axiosPublic.post('/create-new-task', newTask)
     .then(res => {
         if(res.data.insertedId) {
-            toast('Task Added to TO-DO list successfully');
+            toast('Task Added to To-Do list successfully');
             reset();
         }
     })
