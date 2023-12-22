@@ -13,6 +13,7 @@ const CreateTask = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
@@ -33,7 +34,8 @@ const CreateTask = () => {
     axiosPublic.post('/create-new-task', newTask)
     .then(res => {
         if(res.data.insertedId) {
-            toast('Task Added to TO-DO list successfully')
+            toast('Task Added to TO-DO list successfully');
+            reset();
         }
     })
 
