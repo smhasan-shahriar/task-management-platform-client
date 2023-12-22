@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import emailjs from "@emailjs/browser";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Helmet } from "react-helmet";
 
 const Contact = () => {
   const form = useRef();
@@ -32,6 +33,9 @@ const Contact = () => {
   };
   return (
     <div className="customContainer max-w-[1440px] min-h-screen mx-auto px-10">
+      <Helmet>
+        <title>Swift Task Planner | Contact Us</title>
+      </Helmet>
       <h1 className="font-bold text-4xl my-10 mx-auto text-center">
         Contact Us
       </h1>

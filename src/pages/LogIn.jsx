@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 
 import useAuth from "../hooks/useAuth";
+import { Helmet } from "react-helmet";
 
 const LogIn = () => {
   const { logIn, socialLogIn } = useAuth();
@@ -75,6 +76,9 @@ const LogIn = () => {
   };
   return (
     <div className="min-h-screen mt-20 md:mt-0 py-20 bg-gradient-to-r from-cyan-500 to-blue-500 flex justify-center items-center">
+      <Helmet>
+        <title>Swift Task Planner | Log In</title>
+      </Helmet>
       <div className="flex items-center justify-center">
         <div>
           <h2 className="text-5xl font-bold mb-10 text-center text-white">
