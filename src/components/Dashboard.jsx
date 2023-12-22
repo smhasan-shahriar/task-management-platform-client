@@ -133,17 +133,25 @@ const Section = ({
   }));
 
   let text = "todo";
+  let bg;
+  let textColor;
   let tasksToMap = toDos;
   if (status === "incomplete") {
     text = "To Do";
+    bg = 'bg-blue-200'
+    textColor = 'text-blue-800'
     tasksToMap = toDos;
   }
   if (status === "ongoing") {
     text = "Ongoing";
+    bg = 'bg-yellow-200'
+    textColor = 'text-yellow-800'
     tasksToMap = ongoing;
   }
   if (status === "complete") {
     text = "Complete";
+    bg = 'bg-green-200'
+    textColor = 'text-green-800'
     tasksToMap = completed;
   }
   const addItemToSection = (id) => {
@@ -160,11 +168,11 @@ const Section = ({
     <div
       ref={drop}
       className={`w-full min-h-[300px] shadow-xl pb-5 rounded-lg ${
-        isOver ? "bg-violet-200" : ""
+        isOver ? "bg-violet-100" : ""
       }`}
     >
-      <Header text={text} count={tasksToMap?.length}></Header>
-      <div className="flex flex-col justify-center items-center gap-5 mt-5">
+      <Header text={text} bg={bg} textColor={textColor} count={tasksToMap?.length}></Header>
+      <div className={`flex flex-col justify-center items-center gap-5 mt-5`}>
         {tasksToMap?.length > 0 &&
           tasksToMap?.map((task) => (
             <Task
@@ -185,12 +193,12 @@ const Section = ({
   );
 };
 
-const Header = ({ text, count }) => {
+const Header = ({ text, count, bg, textColor }) => {
   return (
-    <div className="text-center font-medium py-2 rounded-lg  bg-gradient-to-r from-blue-500 to-violet-500 text-white text-xl">
+    <div className={`text-center font-medium py-2 rounded-lg  ${bg} ${textColor} text-xl`}>
       <div className="flex justify-center items-center gap-3">
         <div>{text}</div>
-        <div className="rounded-full w-7 h-7  bg-white text-blue-700">{count}</div>
+        <div className="rounded-full w-7 h-7  bg-white">{count}</div>
       </div>
     </div>
   );
