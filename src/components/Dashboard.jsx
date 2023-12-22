@@ -70,7 +70,7 @@ const Dashboard = () => {
     <>
       <DndProvider backend={isMobile ? TouchBackend : HTML5Backend}>
         <div className="max-w-[1440px] mx-auto px-10 mb-10">
-          <div className="py-2  w-full flex items-center justify-between px-5 shadow-xl my-3 rounded-full">
+          <div className="py-2  w-full flex items-center justify-between px-5 shadow-xl my-3 rounded-lg">
             <p className=" font-bold text-2xl">Dashboard</p>
             <div className="flex items-center gap-4">
               <Link to="createTask" className="btn">
